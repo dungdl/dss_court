@@ -56,4 +56,8 @@ data_df = data_df.transpose()
 data_df['age_dist'] = pd.Series(age_dist, index=data_df.index)
 data_df['has_children'] = pd.Series(has_childrens, index=data_df.index)
 
+data_df = pd.get_dummies(
+    data_df, prefix=['rela'], columns=['legal_rela'])
+
+
 data_df.to_csv(NORMALIZED_DATASET_PATH, index=False)
