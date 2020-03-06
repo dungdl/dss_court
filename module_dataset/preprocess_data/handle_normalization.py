@@ -35,7 +35,7 @@ for i in range(0, length + 1):
     corr_decis = re.search(r'\d', decision)
 
     legal_relas[i] = int(corr_legal.group())
-    decisions[i] = int(corr_decis.group())
+    decisions[i] = int(corr_decis.group()) - 1
 
     # TODO: speculate childrend status from legal relation
     if legal_relas[i] == 5:
@@ -49,7 +49,7 @@ for i in range(0, length + 1):
 # MARK:- create useful dataframe
 
 data_df = pd.DataFrame(
-    [ids, decisions, legal_relas, plaintiff_ages, defendant_ages])
+    [legal_relas, plaintiff_ages, defendant_ages, decisions])
 
 data_df = data_df.transpose()
 
