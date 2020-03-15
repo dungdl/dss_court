@@ -1,12 +1,14 @@
 # MARK:- libs
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import pydotplus
 
+from IPython.display import Image
+from matplotlib.pyplot import imshow
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier, plot_tree
-from sklearn.metrics import accuracy_score
-from data_path import NORMALIZED_DATASET_PATH
+from sklearn import tree
+
+from data_path import NORMALIZED_DATASET_PATH, IMAGE_DES_TREE_DATA_PATH
 
 # MARK:- prepare data
 data_df = pd.read_csv(NORMALIZED_DATASET_PATH)
@@ -19,18 +21,17 @@ feature_list = list(features_df.columns)
 X_train, X_test, y_train, y_test = train_test_split(
     features_arr, labels_arr, test_size=0.2, random_state=42)
 
-# MARK:- create decision tree classifier
+# MARK:- start training
+clf = tree.DecisionTreeClassifier()
+clf_train = clf.fit(X_train, y_train)
 
-clf = DecisionTreeClassifier(criterion="entropy")
+# MARK:- display
 
-clf = clf.fit(X_train, y_train)
+dot_data = tree.export_graphviz(clf_train, out_file=None, feature_names=feature_list, class_names=['1', '2'],
+                                rounded=True, filled=True)
 
-# MARK:- start prediction
+graph = pydotplus.graph_from_dot_data(dot_data)
+img = Image(graph.create_png())
 
-y_pred = clf.predict(X_test)
-
-
-# MARK:- evaluation
-accuracy = accuracy_score(y_test, y_pred, normalize=False)
-
-print('Accuracy:', round(accuracy, 2))
+with open(IMAGE_DES_TREE_DATA_PATH, "wb") as png:
+    png.write(img.data)
