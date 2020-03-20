@@ -17,6 +17,8 @@ feature_list = list(features_df.columns)
 X_train, X_test, y_train, y_test = train_test_split(
     features_arr, labels_arr, test_size=0.2, random_state=42)
 
-model = OLS(y_train, X_train).fit()
+# model = OLS(y_train, X_train).fit()
 
-print(model.summary())
+# print(model.summary())
+
+print(feature_list)

@@ -46,3 +46,20 @@ def one_hot_encoding():
     one_hot_df = pd.get_dummies(
         data_df, prefix=['rela'], columns=['legal_rela'])
     print(one_hot_df)
+
+
+data_df = pd.read_csv(NORMALIZED_DATASET_PATH)
+
+map_name_dic = {'legal_rela': 'quan_he_phap_luat',
+                'plaintiff_age': 'tuoi_nguyen_don',
+                'defendant_age': 'tuoi_bi_don',
+                'age_dist': 'do_lech_tuoi',
+                'has_children': 'co_con_chung',
+                'decision': 'quyet_dinh'}
+
+datad_df = data_df.rename(columns=map_name_dic, inplace=True)
+
+labels = data_df['quyet_dinh'].tolist()
+train_df = data_df.drop(columns=['quyet_dinh'])
+feature_l = train_df.columns
+print(data_df.head())
