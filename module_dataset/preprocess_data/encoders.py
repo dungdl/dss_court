@@ -28,19 +28,19 @@ def woe_encoding():
     woe_df['WoE'] = np.log(woe_df.Good / woe_df.Bad)
     print(woe_df)
 
-# MARK:- Binary encoder testing
+# MARK:- Binary encoder 
 
 
 def binary_encoding():
     source_bin_df = data_df
-    encoder = ce.BinaryEncoder(cols=['legal_rela'], drop_invariant=True)
-    dfb = encoder.fit_transform(source_bin_df['legal_rela'])
+    encoder = ce.BinaryEncoder(cols=['decision'], drop_invariant=True)
+    dfb = encoder.fit_transform(source_bin_df['decision'])
     source_bin_df = pd.concat([source_bin_df, dfb], axis=1)
 
     print(source_bin_df)
 
 
-# MARK:- one-hot encoder testing
+# MARK:- one-hot encoder 
 
 def one_hot_encoding():
     one_hot_df = pd.get_dummies(

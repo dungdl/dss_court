@@ -37,7 +37,7 @@ for i in range(0, length + 1):
     legal_relas[i] = int(corr_legal.group())
     decisions[i] = int(corr_decis.group()) - 1
 
-    # TODO: speculate childrend status from legal relation
+    # TODO: speculate children status from legal relation
     if legal_relas[i] == 5:
         has_childrens.append(0)
     else:

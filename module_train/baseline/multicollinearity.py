@@ -12,15 +12,15 @@ from data_path import NORMALIZED_DATASET_PATH
 data_df = pd.read_csv(NORMALIZED_DATASET_PATH)
 labels_arr = np.array(data_df['decision'])
 features_df = data_df.drop('decision', axis=1)
-features_arr = np.array(features_df)
 
-feature_list = list(features_df.columns)
+# For each X, calculate VIF and save in dataframe
+X = features_df
+X['interpret'] = 1
 
-X_train, X_test, y_train, y_test = train_test_split(
-    features_arr, labels_arr, test_size=0.2, random_state=42)
+# Compute and view VIF
+vif = pd.DataFrame()
+vif["variables"] = X.columns
+vif["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
 
-model = OLS(y_train, X_train).fit()
-
-print(model.summary())
-
-# print(feature_list)
+# View results using print
+print(vif)
